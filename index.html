@@ -24,7 +24,7 @@
       link2.style.display = 'block'
       document.body.appendChild(link2)
     }
-    navigator.serviceWorker.register('/sw.js', { type: 'module' }).then(async() => {
+    navigator.serviceWorker.register('sw.js', { type: 'module' }).then(async() => {
       console.log('SW registered')
 
       const interval = setInterval(async () => {
