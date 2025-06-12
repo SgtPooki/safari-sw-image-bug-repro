@@ -1,11 +1,20 @@
 // @ts-nocheck
 // import unixfs from helia and memory blockstore
-import { IDBBlockstore } from 'https://esm.sh/blockstore-idb@2.0.3'
-import { unixfs } from 'https://esm.sh/@helia/unixfs@5.0.3'
-import { CID } from 'https://esm.sh/multiformats@13.3.7/cid'
+importScripts('https://cdn.jsdelivr.net/npm/blockstore-idb@2.0.3/dist/index.min.js')
+importScripts('https://cdn.jsdelivr.net/npm/@helia/unixfs@5.0.3/dist/index.min.js')
+importScripts('https://cdn.jsdelivr.net/npm/multiformats@13.3.7/dist/index.min.js')
+
+const { IDBBlockstore } = BlockstoreIdb
+const { unixfs } = HeliaUnixfs
+const { CID } = Multiformats
 
 const blockstore = new IDBBlockstore('store-path')
 const fs = unixfs({ blockstore })
+
+console.log('SW loaded')
+self.addEventListener('error', e => {
+  console.error('[SW global error]', e.message);
+});
 
 self.addEventListener('install', (event) => {
   self.skipWaiting()

@@ -5,11 +5,11 @@
 </head>
 <body>
   <script>
-    navigator.serviceWorker.register('sw.js', { type: 'module' }).then(async() => {
+    navigator.serviceWorker.register('sw.js').then(async() => {
       console.log('SW registered')
 
       const interval = setInterval(async () => {
-        const isReady = await fetch('/test-ready')
+        const isReady = await fetch('test-ready')
         if (isReady.ok) {
           window.location.reload()
           clearInterval(interval)
