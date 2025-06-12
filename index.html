@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Safari SW Bug Repro</title>
+</head>
+<body>
+  <script>
+    function handleIsReady() {
+      const img = document.querySelector('#img')
+      img.src = '/image-sw.jpg'
+      // img.src = 'https://trustless-gateway.link/ipfs/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi?format=raw'
+      img.style.display = 'block'
+
+      // add a link below the image to the image-sw page
+      const link = document.createElement('a')
+      link.href = '/image-sw-blob'
+      link.textContent = 'View image directly from SW (blob)'
+      link.style.display = 'block'
+      document.body.appendChild(link)
+
+      const link2 = document.createElement('a')
+      link2.href = '/image-sw-stream'
+      link2.textContent = 'View image directly from SW (stream)'
+      link2.style.display = 'block'
+      document.body.appendChild(link2)
+    }
+    navigator.serviceWorker.register('/sw.js', { type: 'module' }).then(async() => {
+      console.log('SW registered')
+
+      const interval = setInterval(async () => {
+        const isReady = await fetch('/test-ready')
+        if (isReady.ok) {
+          handleIsReady()
+          clearInterval(interval)
+        } else {
+          console.error('Image is not ready')
+        }
+      }, 500)
+    }).catch(err => console.error('SW error:', err))
+  </script>
+  <h1>Safari SW Bug: Image fails to render</h1>
+  <p>If you're in Safari, the image will render below (after SW is registered)because we're using an <code>img</code> tag, but the bug is reproduced when you navigate to the image directly.</p>
+  <img alt="Test Image" loading="lazy" id="img" style="display: none;">
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Safari SW Bug Repro</title>
+</head>
+<body>
+  <script>
+    navigator.serviceWorker.register('/sw.js', { type: 'module' }).then(async() => {
+      console.log('SW registered')
+
+      const interval = setInterval(async () => {
+        const isReady = await fetch('/test-ready')
+        if (isReady.ok) {
+          window.location.reload()
+          clearInterval(interval)
+        } else {
+          console.error('Image is not ready')
+        }
+      }, 500)
+    }).catch(err => console.error('SW error:', err))
+  </script>
+  <h1>Safari SW Bug: Image fails to render</h1>
+</body>
+</html>
