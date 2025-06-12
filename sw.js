@@ -49,7 +49,7 @@ self.addEventListener('fetch', event => {
     return
   }
   const cid = CID.parse('bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi')
-  if (url.pathname === '/test-ready') {
+  if (url.pathname.endsWith('/test-ready')) {
     console.log('Test ready endpoint hit')
     event.respondWith(new Response('ready', {
       status: 200,
@@ -60,13 +60,13 @@ self.addEventListener('fetch', event => {
     return
   }
 
-  if (url.pathname === '/unregister') {
+  if (url.pathname.endsWith('/unregister')) {
     console.log('Unregistering SW')
     event.waitUntil(self.registration.unregister())
     return
   }
 
-  if (url.pathname === '/image-sw-blob') {
+  if (url.pathname.endsWith('/image-sw-blob')) {
     console.log('Fetching image-sw')
 
     // Create a promise that will resolve with the response
@@ -102,7 +102,7 @@ self.addEventListener('fetch', event => {
     return
   }
 
-  if (url.pathname === '/image-sw-stream') {
+  if (url.pathname.endsWith('/image-sw-stream')) {
     console.log('Fetching image-sw')
 
     // Create a promise that will resolve with the response
