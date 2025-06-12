@@ -5,7 +5,7 @@
 </head>
 <body>
   <script>
-    navigator.serviceWorker.register('/sw.js', { type: 'module' }).then(async() => {
+    navigator.serviceWorker.register('sw.js', { type: 'module' }).then(async() => {
       console.log('SW registered')
 
       const interval = setInterval(async () => {
