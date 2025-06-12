@@ -108,16 +108,12 @@ self.addEventListener('fetch', event => {
     // Create a promise that will resolve with the response
     const responsePromise = (async () => {
       try {
-        await ensureContentIsLoaded()
-
-        const chunks = []
-        for await (const chunk of await fs.cat(cid)) {
-          chunks.push(chunk)
-        }
-
         const stream = new ReadableStream({
-          async start(controller) {
-            for await (const chunk of chunks) {
+          async start() {
+            await ensureContentIsLoaded()
+          },
+          async pull(controller) {
+            for await (const chunk of await fs.cat(cid)) {
               controller.enqueue(chunk)
             }
             controller.close()
