@@ -6,20 +6,20 @@
 <body>
   <script>
     function handleIsReady() {
-      const img = document.querySelector('#img')
-      img.src = '/image-sw.jpg'
+      // const img = document.querySelector('#img')
+      // img.src = '/image-sw.jpg'
       // img.src = 'https://trustless-gateway.link/ipfs/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi?format=raw'
-      img.style.display = 'block'
+      // img.style.display = 'block'
 
       // add a link below the image to the image-sw page
       const link = document.createElement('a')
-      link.href = '/image-sw-blob'
+      link.href = 'image-sw-blob'
       link.textContent = 'View image directly from SW (blob)'
       link.style.display = 'block'
       document.body.appendChild(link)
 
       const link2 = document.createElement('a')
-      link2.href = '/image-sw-stream'
+      link2.href = 'image-sw-stream'
       link2.textContent = 'View image directly from SW (stream)'
       link2.style.display = 'block'
       document.body.appendChild(link2)
